@@ -1,8 +1,8 @@
 pipeline {
     agent none // Esto permite definir agentes específicos para cada etapa
-    tools {
-        sonarQube 'sonarscanner'
-    }
+    // tools {
+    //     sonarQube 'sonarscanner'
+    // }
     stages {
         stage('Build and SonarQube Analysis') {
             agent {
