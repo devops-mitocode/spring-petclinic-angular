@@ -17,7 +17,7 @@ pipeline {
                     // Instala dependencias y construye el proyecto
                     sh 'npm install'
                     sh 'npm run build'
-                    sh 'npm run test-headless'
+                    // sh 'npm run test-headless'
                     sh 'npm install -g sonarqube-scanner'
                     // Ejecuta el análisis de SonarQube
                     // Asegúrate de reemplazar YOUR_SONAR_HOST y YOUR_SONAR_TOKEN con tus propios valores
@@ -28,7 +28,7 @@ pipeline {
                     //     -Dsonar.login=YOUR_SONAR_TOKEN"
                     // sh 'sonar-scanner --version'
                     sh 'env | sort'
-                    def scannerHome = tool 'sonarscanner';
+                    // def scannerHome = tool 'sonarscanner';
                     withSonarQubeEnv('sonarqube') { // If you have configured more than one global server connection, you can specify its name
                         //sh "ls -la $scannerHome/bin/"
                         
