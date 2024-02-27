@@ -1,6 +1,8 @@
 pipeline {
     agent none // Esto permite definir agentes específicos para cada etapa
-
+    tools {
+        sonarQube 'sonarscanner'
+    }
     stages {
         stage('Build and SonarQube Analysis') {
             agent {
@@ -17,11 +19,12 @@ pipeline {
                     sh 'npm run build'
                     // Ejecuta el análisis de SonarQube
                     // Asegúrate de reemplazar YOUR_SONAR_HOST y YOUR_SONAR_TOKEN con tus propios valores
-                    sh "sonar-scanner \
-                        -Dsonar.projectKey=spring-petclinic-angular \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=YOUR_SONAR_HOST \
-                        -Dsonar.login=YOUR_SONAR_TOKEN"
+                    // sh "sonar-scanner \
+                    //     -Dsonar.projectKey=spring-petclinic-angular \
+                    //     -Dsonar.sources=. \
+                    //     -Dsonar.host.url=YOUR_SONAR_HOST \
+                    //     -Dsonar.login=YOUR_SONAR_TOKEN"
+                    sh 'sonar-scanner --version'
                 }
             }
         }
