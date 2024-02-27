@@ -4,7 +4,7 @@ pipeline {
     //     sonarQube 'sonarscanner'
     // }
     stages {
-        stage('Build and SonarQube Analysis') {
+        stage('Build') {
             agent {
                 docker {
                     image 'node:18.19.1-alpine' // Usa una imagen de Docker con Node.js para construir el proyecto Angular
