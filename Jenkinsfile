@@ -2,13 +2,6 @@ pipeline {
     agent none // Esto permite definir agentes específicos para cada etapa
 
     stages {
-        stage('Checkout') {
-            agent any // Puede ejecutarse en cualquier agente
-            steps {
-                checkout scm // Hace checkout del código fuente desde el repositorio configurado en el proyecto de Jenkins
-            }
-        }
-
         stage('Build and SonarQube Analysis') {
             agent {
                 docker {
