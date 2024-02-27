@@ -5,7 +5,7 @@ pipeline {
             agent {
                 docker {
                     image 'node:18.19.1-alpine'
-                    args '-u root'
+                    // args '-u root'
                 }
             }
             steps {
@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     withSonarQubeEnv('sonarqube') {
-                        sh 'env | sort'
+                        // sh 'env | sort'
                         sh "sonar-scanner --version"
                         sh "sonar-scanner --help"
                         sh "sonar-scanner"
