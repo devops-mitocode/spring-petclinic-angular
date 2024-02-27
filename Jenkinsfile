@@ -17,6 +17,7 @@ pipeline {
                     // Instala dependencias y construye el proyecto
                     sh 'npm install'
                     sh 'npm run build'
+                    sh 'npm run test'
                     sh 'npm install -g sonarqube-scanner'
                     // Ejecuta el análisis de SonarQube
                     // Asegúrate de reemplazar YOUR_SONAR_HOST y YOUR_SONAR_TOKEN con tus propios valores
