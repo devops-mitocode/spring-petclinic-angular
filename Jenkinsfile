@@ -18,7 +18,7 @@ pipeline {
                     sh 'npm install'
                     sh 'npm run build'
                     // sh 'npm run test-headless'
-                    sh 'npm install -g sonarqube-scanner'
+                    // sh 'npm install -g sonarqube-scanner'
                     // Ejecuta el análisis de SonarQube
                     // Asegúrate de reemplazar YOUR_SONAR_HOST y YOUR_SONAR_TOKEN con tus propios valores
                     // sh "sonar-scanner \
@@ -29,33 +29,33 @@ pipeline {
                     // sh 'sonar-scanner --version'
                     sh 'env | sort'
                     // def scannerHome = tool 'sonarscanner';
-                    withSonarQubeEnv('sonarqube') { // If you have configured more than one global server connection, you can specify its name
-                        //sh "ls -la $scannerHome/bin/"
+                    // withSonarQubeEnv('sonarqube') { // If you have configured more than one global server connection, you can specify its name
+                    //     //sh "ls -la $scannerHome/bin/"
                         
-                        //sh "${scannerHome}/bin/sonar-scanner"
-                        sh "sonar-scanner --version"
-                    }
+                    //     //sh "${scannerHome}/bin/sonar-scanner"
+                    //     sh "sonar-scanner --version"
+                    // }
                 }
             }
         }
-        // stage('Build and SonarQube Analysis') {
-        //     agent {
-        //         docker {
-        //             image 'sonarsource/sonar-scanner-cli:5.0.1'
-        //         }
-        //     }
-        //     steps {
-        //         script {
-        //             sh 'sonar-scanner --version'
+        stage('Build and SonarQube Analysis') {
+            agent {
+                docker {
+                    image 'sonarsource/sonar-scanner-cli:5.0.1'
+                }
+            }
+            steps {
+                script {
+                    sh 'sonar-scanner --version'
 
-        //             withSonarQubeEnv('sonarqube') { // If you have configured more than one global server connection, you can specify its name
-        //                 sh 'env | sort'
-        //                 sh "sonar-scanner --version"
-        //                 sh "sonar-scanner --help"
-        //                 sh "sonar-scanner"
-        //             }
-        //         }
-        //     }
-        // }        
+                    withSonarQubeEnv('sonarqube') { // If you have configured more than one global server connection, you can specify its name
+                        sh 'env | sort'
+                        sh "sonar-scanner --version"
+                        sh "sonar-scanner --help"
+                        sh "sonar-scanner"
+                    }
+                }
+            }
+        }        
     }
 }
