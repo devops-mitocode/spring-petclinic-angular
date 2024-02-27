@@ -43,6 +43,7 @@ pipeline {
                     sh 'sonar-scanner --version'
 
                     withSonarQubeEnv('sonarqube') { // If you have configured more than one global server connection, you can specify its name
+                        sh 'env | sort'
                         sh "sonar-scanner --version"
                     }
                 }
