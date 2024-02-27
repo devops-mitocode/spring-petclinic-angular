@@ -7,9 +7,10 @@ pipeline {
         stage('Build and SonarQube Analysis') {
             agent {
                 docker {
-                    image 'node:18.19.1-alpine' // Usa una imagen de Docker con Node.js para construir el proyecto Angular
+                    // image 'node:18.19.1-alpine' // Usa una imagen de Docker con Node.js para construir el proyecto Angular
                     // args '-v /var/run/docker.sock:/var/run/docker.sock' // Permite a Docker comunicarse con el daemon de Docker
-                    args '-u root'
+                    // args '-u root'
+                    image 'sonarsource/sonar-scanner-cli:5.0.1'
                 }
             }
             steps {
@@ -25,10 +26,11 @@ pipeline {
                     //     -Dsonar.host.url=YOUR_SONAR_HOST \
                     //     -Dsonar.login=YOUR_SONAR_TOKEN"
                     // sh 'sonar-scanner --version'
-                    def scannerHome = tool 'sonarscanner';
-                    withSonarQubeEnv('sonarqube') { // If you have configured more than one global server connection, you can specify its name
-                        sh "${scannerHome}/bin/sonar-scanner --version"
-                    }
+                    // def scannerHome = tool 'sonarscanner';
+                    // withSonarQubeEnv('sonarqube') { // If you have configured more than one global server connection, you can specify its name
+                    //     sh "${scannerHome}/bin/sonar-scanner --version"
+                    // }
+                    sh 'sonar-scanner --version'
                 }
             }
         }
