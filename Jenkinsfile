@@ -5,7 +5,7 @@ pipeline {
         stage('Build and SonarQube Analysis') {
             agent {
                 docker {
-                    image 'node:14-alpine' // Usa una imagen de Docker con Node.js para construir el proyecto Angular
+                    image 'node:16.3-alpine' // Usa una imagen de Docker con Node.js para construir el proyecto Angular
                     // args '-v /var/run/docker.sock:/var/run/docker.sock' // Permite a Docker comunicarse con el daemon de Docker
                     args '-u root'
                 }
