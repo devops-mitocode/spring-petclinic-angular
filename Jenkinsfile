@@ -26,12 +26,13 @@ pipeline {
                     //     -Dsonar.host.url=YOUR_SONAR_HOST \
                     //     -Dsonar.login=YOUR_SONAR_TOKEN"
                     // sh 'sonar-scanner --version'
+                    sh 'env | sort'
                     def scannerHome = tool 'sonarscanner';
                     withSonarQubeEnv('sonarqube') { // If you have configured more than one global server connection, you can specify its name
-                        sh "ls -la $scannerHome/bin/"
+                        //sh "ls -la $scannerHome/bin/"
                         
                         //sh "${scannerHome}/bin/sonar-scanner"
-                        sh 'sonar-scanner --version'
+                        sh "sonar-scanner --version"
                     }
                 }
             }
