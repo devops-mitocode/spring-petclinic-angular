@@ -24,7 +24,11 @@ pipeline {
                     //     -Dsonar.sources=. \
                     //     -Dsonar.host.url=YOUR_SONAR_HOST \
                     //     -Dsonar.login=YOUR_SONAR_TOKEN"
-                    sh 'sonar-scanner --version'
+                    // sh 'sonar-scanner --version'
+                    def scannerHome = tool 'sonarscanner';
+                    withSonarQubeEnv('sonarqube') { // If you have configured more than one global server connection, you can specify its name
+                        sh "${scannerHome}/bin/sonar-scanner --version"
+                    }
                 }
             }
         }
