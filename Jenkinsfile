@@ -13,7 +13,7 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        stage('Build and SonarQube Analysis') {
+        stage('SonarQube') {
             agent {
                 docker {
                     image 'sonarsource/sonar-scanner-cli:5.0.1'
