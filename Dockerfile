@@ -4,6 +4,7 @@ ARG NODE_VERSION="18.19.1-alpine"
 
 FROM $DOCKER_HUB/library/node:$NODE_VERSION as build
 
+ARG BUILD_ENV="ephemeral"
 
 COPY . /workspace/
 
@@ -12,7 +13,7 @@ ARG NPM_REGISTRY=" https://registry.npmjs.org"
 RUN echo "registry = \"$NPM_REGISTRY\"" > /workspace/.npmrc                              && \
     cd /workspace/                                                                       && \
     npm install                                                                          && \
-    npm run build
+    npm run build -- --configuration="$BUILD_ENV"
 
 FROM $DOCKER_HUB/library/nginx:$NGINX_VERSION AS runtime
 
