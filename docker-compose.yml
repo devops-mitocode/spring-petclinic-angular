@@ -5,9 +5,9 @@ services:
 #      - SPRING_SQL_INIT_MODE=never
 #      - SPRING_PROFILES_ACTIVE=postgres,spring-data-jpa
 #      - POSTGRES_URL=jdbc:postgresql://db:5432/petclinic
-    depends_on:
-      db:
-        condition: service_healthy
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
 
 #  backend:
 #    build:
