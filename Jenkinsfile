@@ -51,8 +51,11 @@ pipeline {
     }
     post {
         always {
-            sh "docker compose --project-name ${BUILD_TAG} down --volumes"
-            sh 'docker system df'
+            sh '''
+                docker compose -f compose-ci.yaml --project-name ${BUILD_TAG} down --rmi all --volumes --remove-orphans
+                docker builder prune -af
+                docker system df
+            '''
             cleanWs()
         }
     }
