@@ -23,6 +23,8 @@ pipeline {
                     docker compose --project-name ${BUILD_TAG} up -d
                     docker compose --project-name ${BUILD_TAG} ps
 
+                    docker ps -a
+                    docker ps -q | xargs -I {} docker inspect --format 'Nombre: {{.Name}} Hostname: {{.Config.Hostname}} IP: {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {}
                     docker network ls
                 '''                
             }
@@ -30,12 +32,7 @@ pipeline {
         stage('End2End Tests') {
             steps {
                 script {
-                    sh '''
-                        docker ps -a
-                        docker ps -q | xargs -I {} docker inspect --format 'Nombre: {{.Name}} Hostname: {{.Config.Hostname}} IP: {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {}
-                    '''
                     def tagsOption = TAGS?.trim() ? "-Dcucumber.filter.tags='${TAGS}'" : ""
-                    // sh "docker exec ${BUILD_TAG} mvn clean verify -Denvironment=${ENVIRONMENT} -Dwebdriver.remote.url=http://${BUILD_TAG}-selenium-hub-1:4444/wd/hub -Dwebdriver.remote.driver=${BROSWER} ${tagsOption} -B -ntp"
                     sh '''
                         docker compose --project-name ${BUILD_TAG} exec -T maven mvn clean verify \
                         -Denvironment=${ENVIRONMENT} \
