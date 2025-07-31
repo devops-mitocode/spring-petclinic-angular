@@ -12,9 +12,6 @@ pipeline {
     stages {
         stage('Prepare environment') {
             steps {
-
-
-
                 dir('e2e-tests'){
                     git branch: "master",
                     url: "https://github.com/devops-mitocode/e2e-tests-12-24.git"
@@ -51,7 +48,7 @@ pipeline {
                 publishHTML(
                     target: [
                         reportName           : 'Serenity Report',
-                        reportDir            : 'target/site/serenity',
+                        reportDir            : 'e2e-tests/target/site/serenity',
                         reportFiles          : 'index.html',
                         keepAll              : true,
                         alwaysLinkToLastBuild: true,
