@@ -18,9 +18,9 @@ pipeline {
                 sh '''
                     docker --version && docker compose version
                     docker system df
-                    docker compose --project-name ${PROJECT_NAME} pull --quiet
-                    docker compose --project-name ${PROJECT_NAME} up -d
-                    docker compose --project-name ${PROJECT_NAME} ps
+                    docker compose --project-name ${BUILD_TAG} pull --quiet
+                    docker compose --project-name ${BUILD_TAG} up -d
+                    docker compose --project-name ${BUILD_TAG} ps
 
                     docker network ls
                 '''                
