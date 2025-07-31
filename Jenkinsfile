@@ -35,6 +35,14 @@ pipeline {
                     '''
                     // def tagsOption = TAGS?.trim() ? "-Dcucumber.filter.tags='${TAGS}'" : ""
                     // sh "docker exec ${BUILD_TAG} mvn clean verify -Denvironment=${ENVIRONMENT} -Dwebdriver.remote.url=http://${BUILD_TAG}-selenium-hub-1:4444/wd/hub -Dwebdriver.remote.driver=${BROSWER} ${tagsOption} -B -ntp"
+                    sh '''
+                        docker compose --project-name ${PROJECT_NAME} exec -T maven mvn clean verify \
+                        -Denvironment=${ENVIRONMENT} \
+                        -Dwebdriver.remote.url=http://${BUILD_TAG}-selenium-hub-1:4444/wd/hub \
+                        -Dwebdriver.remote.driver=${BROSWER} \
+                        -Dstyle.color=always \
+                        ${tagsOption} -B -ntp
+                    '''
                 }
 //                publishHTML(
 //                    target: [
