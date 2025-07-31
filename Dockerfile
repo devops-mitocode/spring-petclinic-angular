@@ -9,10 +9,12 @@ COPY . /workspace/
 
 ARG NPM_REGISTRY=" https://registry.npmjs.org"
 
+ARG BUILD_ENV="ephemeral"
+
 RUN echo "registry = \"$NPM_REGISTRY\"" > /workspace/.npmrc                              && \
     cd /workspace/                                                                       && \
     npm install                                                                          && \
-    npm run build
+    npm run build -- --configuration="$BUILD_ENV"
 
 FROM $DOCKER_HUB/library/nginx:$NGINX_VERSION AS runtime
 
