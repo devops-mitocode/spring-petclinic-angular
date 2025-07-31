@@ -33,10 +33,10 @@ pipeline {
                         docker ps -a
                         docker ps -q | xargs -I {} docker inspect --format 'Nombre: {{.Name}} Hostname: {{.Config.Hostname}} IP: {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {}
                     '''
-                    // def tagsOption = TAGS?.trim() ? "-Dcucumber.filter.tags='${TAGS}'" : ""
+                    def tagsOption = TAGS?.trim() ? "-Dcucumber.filter.tags='${TAGS}'" : ""
                     // sh "docker exec ${BUILD_TAG} mvn clean verify -Denvironment=${ENVIRONMENT} -Dwebdriver.remote.url=http://${BUILD_TAG}-selenium-hub-1:4444/wd/hub -Dwebdriver.remote.driver=${BROSWER} ${tagsOption} -B -ntp"
                     sh '''
-                        docker compose --project-name ${PROJECT_NAME} exec -T maven mvn clean verify \
+                        docker compose --project-name ${BUILD_TAG} exec -T maven mvn clean verify \
                         -Denvironment=${ENVIRONMENT} \
                         -Dwebdriver.remote.url=http://${BUILD_TAG}-selenium-hub-1:4444/wd/hub \
                         -Dwebdriver.remote.driver=${BROSWER} \
@@ -60,7 +60,7 @@ pipeline {
     post {
         always {
             sh '''
-                docker compose -f compose-ci.yaml --project-name ${BUILD_TAG} down --rmi all --volumes --remove-orphans
+                docker compose --project-name ${BUILD_TAG} down --rmi all --volumes --remove-orphans
                 docker builder prune -af
                 docker system df
             '''
