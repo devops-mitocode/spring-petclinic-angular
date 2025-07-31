@@ -8,7 +8,7 @@ services:
       - BUILD_TAG=${BUILD_TAG}
     volumes:
       - ${WORKSPACE}:${WORKSPACE}
-    working_dir: ${WORKSPACE}
+    working_dir: ${WORKSPACE}/e2e-tests
 
   frontend:
     build:
