@@ -23,9 +23,8 @@ pipeline {
                     docker compose --project-name ${BUILD_TAG} up -d
                     docker compose --project-name ${BUILD_TAG} ps
 
-                    docker ps -a
-                    docker ps -q | xargs -I {} docker inspect --format 'Nombre: {{.Name}} Hostname: {{.Config.Hostname}} IP: {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {}
                     docker network ls
+                    docker ps -q | xargs -I {} docker inspect --format 'Nombre: {{.Name}} Hostname: {{.Config.Hostname}} IP: {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {}
                 '''                
             }
         }
