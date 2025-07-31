@@ -15,18 +15,24 @@ pipeline {
                     git branch: "master",
                     url: "https://github.com/devops-mitocode/e2e-tests-12-24.git"
                 }
-                sh 'cd e2e-tests && ls -la'
-                sh 'env | sort'
-                sh 'docker system df'
-                sh "docker compose --project-name ${BUILD_TAG} up -d --quiet-pull"
-                sh 'docker ps -a'
-                sh 'docker network ls'
+                sh '''
+                    docker --version && docker compose version
+                    docker system df
+                    docker compose --project-name ${PROJECT_NAME} pull --quiet
+                    docker compose --project-name ${PROJECT_NAME} up -d
+                    docker compose --project-name ${PROJECT_NAME} ps
+
+                    docker network ls
+                '''                
             }
         }
         stage('End2End Tests') {
             steps {
                 script {
-                    sh 'docker ps -a'
+                    sh '''
+                        docker ps -a
+                        docker ps -q | xargs -I {} docker inspect --format 'Nombre: {{.Name}} Hostname: {{.Config.Hostname}} IP: {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {}
+                    '''
                     // def tagsOption = TAGS?.trim() ? "-Dcucumber.filter.tags='${TAGS}'" : ""
                     // sh "docker exec ${BUILD_TAG} mvn clean verify -Denvironment=${ENVIRONMENT} -Dwebdriver.remote.url=http://${BUILD_TAG}-selenium-hub-1:4444/wd/hub -Dwebdriver.remote.driver=${BROSWER} ${tagsOption} -B -ntp"
                 }
